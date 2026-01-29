@@ -11,6 +11,7 @@ export function useBoard(initialBoard?: Board | null) {
 
   useEffect(() => {
     if (initialBoard) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setBoard(initialBoard);
       setColumns(initialBoard.columns || []);
     }
