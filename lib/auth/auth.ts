@@ -1,11 +1,12 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import clientPromise from "../mongodb-client";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { initializeUserBoard } from "../init-user-board";
+import connectDB from "../db";
 
-const client = await clientPromise;
+const mongooseInstance = await connectDB();
+const client = mongooseInstance.connection.getClient();
 const db = client.db();
 
 export const auth = betterAuth({
@@ -33,7 +34,6 @@ export const auth = betterAuth({
                 "Board creation failed but user was created:",
                 error
               );
-              // لا نترك الخطأ يخرج هنا حتى لا يفشل التسجيل الأساسي
             }
           }
         },
